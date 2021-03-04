@@ -1,40 +1,47 @@
 // reteriving file that will be tested.
-const Employee = require('../js/engineer');
+const Engineer = require('../js/engineer');
 
 // making sure all added information is working to be as expected.
-describe("Get employee's information.", () => {
-    it("This test generates the employee's name.", () => {
-      const name = "Sally Hayes";
-      const newName = new Employee(name);
+describe("Get engineer's information.", () => {
+    it("This test generates the engineer's name.", () => {
+      const name = "Test Master";
+      const newName = new Engineer(name);
   
       expect(newName.name).toBe(name);
     })
   });
 
-  it("This test generates the employee's id.", () => {
-    const id = 1717;
-    const newId = new Employee("human", id);
+  it("This test generates the engineer's id.", () => {
+    const id = 8080;
+    const newId = new Engineer(id);
 
-    expect(newId.getId()).toBe("human", id);
+    expect(newId.id).toBe(id.name);
   });
 
-  it("This test generates the employee's email.", () => {
+  it("This test generates the engineer's email.", () => {
     const email = "example@gmail.com";
-    const newEmail = new Employee("human", 1717, email);
+    const newEmail = new Engineer(email);
 
-    expect(newEmail.email).toBe("example@gmail.com", email);
+    expect(newEmail.email).toBe(email.name);
   });
 
-  it("This test checks if the role returns employee.", () => {
-    const position = "Employee";
-    const newPosition = new Employee("human", 1717, email, "example@gmail.com", position);
+  it("This test generates the engineer's github.", () => {
+    const gitHub = "testMasterGitHub";
+    const newGitHub = new Engineer(gitHub);
+
+    expect(newGitHub.gitHub).toBe(gitHub.name);
+  });
+
+  it("This test checks if the role returns engineer.", () => {
+    const position = "Engineer";
+    const newPosition = new Engineer(position.name);
 
     expect(newPosition.getRole()).toBe(position);
   });
 
 
   it("This test checks the whole Employee class.", () => {
-    const employeeClass = new Employee();
+    const EngineerClass = new Engineer();
 
-    expect(typeof (employeeClass)).toBe(" ");
+    expect(typeof (EngineerClass)).toBe("object");
   });
