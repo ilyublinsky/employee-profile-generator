@@ -1,40 +1,46 @@
 // reteriving file that will be tested.
 const Manager = require('../js/manager');
 
-// making sure all added information is working to be as expected.
-describe("Get employee's information.", () => {
-    it("This test generates the employee's name.", () => {
-      const name = "Sally Hayes";
+describe("These tests retrieve manager's information.", () => {
+    it("This test generates the manager's name.", () => {
+      const name = "Jenny";
       const newName = new Manager(name);
   
       expect(newName.name).toBe(name);
     })
   });
 
-  it("This test generates the employee's id.", () => {
-    const id = 1717;
-    const newId = new Manager("human", id);
+  it("This test generates the manager's id.", () => {
+    const id = 1111;
+    const newId = new Manager(id);
 
-    expect(newId.getId()).toBe("human", id);
+    expect(newId.id).toBe(id.name);
   });
 
-  it("This test generates the employee's email.", () => {
+  it("This test generates the manager's email.", () => {
     const email = "example@gmail.com";
-    const newEmail = new Manager("human", 1717, email);
+    const newEmail = new Manager(email);
 
-    expect(newEmail.email).toBe("example@gmail.com", email);
+    expect(newEmail.email).toBe(email.name);
+  });
+
+  it("This test generates the manager's office number.", () => {
+    const officeNum = "2068675309";
+    const newOfficeNum = new Manager(officeNum);
+
+    expect(newOfficeNum.officeNum).toBe(officeNum.name);
   });
 
   it("This test checks if the role returns employee.", () => {
-    const position = "Employee";
-    const newPosition = new Manager("human", 1717, email, "example@gmail.com", position);
+    const position = "Manager";
+    const newPosition = new Manager(position.name);
 
     expect(newPosition.getRole()).toBe(position);
   });
 
 
   it("This test checks the whole Employee class.", () => {
-    const managerClass = new Manager();
+    const ManagerClass = new Manager();
 
-    expect(typeof (employeeClass)).toBe("");
+    expect(typeof (ManagerClass)).toBe("object");
   });
