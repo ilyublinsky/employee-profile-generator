@@ -1,8 +1,8 @@
 // reteriving file that will be tested.
-const Employee = require('../js/employee');
+const Employee = require('../js/engineer');
 
 // making sure all added information is working to be as expected.
-describe("These tests retrieve employee's information.", () => {
+describe("Get employee's information.", () => {
     it("This test generates the employee's name.", () => {
       const name = "Sally Hayes";
       const newName = new Employee(name);
@@ -13,21 +13,21 @@ describe("These tests retrieve employee's information.", () => {
 
   it("This test generates the employee's id.", () => {
     const id = 1717;
-    const newId = new Employee(id);
+    const newId = new Employee("human", id);
 
-    expect(newId.id).toBe(id.name);
+    expect(newId.getId()).toBe("human", id);
   });
 
   it("This test generates the employee's email.", () => {
     const email = "example@gmail.com";
-    const newEmail = new Employee(email);
+    const newEmail = new Employee("human", 1717, email);
 
-    expect(newEmail.email).toBe(email.name);
+    expect(newEmail.email).toBe("example@gmail.com", email);
   });
 
   it("This test checks if the role returns employee.", () => {
     const position = "Employee";
-    const newPosition = new Employee(position.name);
+    const newPosition = new Employee("human", 1717, email, "example@gmail.com", position);
 
     expect(newPosition.getRole()).toBe(position);
   });
@@ -36,5 +36,5 @@ describe("These tests retrieve employee's information.", () => {
   it("This test checks the whole Employee class.", () => {
     const employeeClass = new Employee();
 
-    expect(typeof (employeeClass)).toBe("object");
+    expect(typeof (employeeClass)).toBe(" ");
   });
