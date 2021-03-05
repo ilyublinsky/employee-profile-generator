@@ -12,6 +12,9 @@ const Manager = require("../js/manager");
 const Engineer = require("../js/engineer");
 const Intern = require("../js/intern");
 
+//open array
+const team = [];
+
 //Prompt to input the manager's information when starting the app
 const teamManagerInfo = [
     {
@@ -35,7 +38,7 @@ const teamManagerInfo = [
 
     {
         type: "input",
-        name: "office_#",
+        name: "officeNum",
         message: "Enter your office number:"
 
     },
@@ -56,3 +59,35 @@ const addTeamMembers = [
         message: "Would you like to add another employee?",
     }
 ];
+
+//function that starts the application
+app();
+app() => {
+    inquirer
+        .prompt (managerQuestions)
+        .then(response => {
+
+const managerAuthentication = new Manager(response.name, response.id, response.email, response.officeNum);
+team.push(teamManagerInfo);
+addNewMember();
+});
+};
+
+//function that adds a new team member
+addTeamMember => () {
+    inquirer
+        .prompt (newTeamMemberQuestions)
+        .then(response => {
+            switch (response.addTeamMember);
+            case "Engineer"; addEngineer(response.addTeamMember);
+                break;
+            case "Intern"; addIntern(response.addTeamMember);
+                break;
+            case "Done":
+                renderHTMLfile(team, (err) => {
+                    if (err) throw err;
+                });
+                break;
+        });
+        
+};
