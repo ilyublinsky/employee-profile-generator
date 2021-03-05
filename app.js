@@ -124,3 +124,29 @@ inquirer
         };
     };
 }
+
+//intern choice with school question
+function addIntern(choice) {
+    const InternQuestion = {
+        type: "input",
+        name: "school"
+        message: `Enter the school the ${answerChoosed} is associated with: `,
+    };
+    managerQuestions.push(internQuestion);
+    managerQuestions[0].message = `Enter the name of the ${answerChoosed}:`;
+    inquirer
+        .prompt(managerQuestions)
+        .then(answer => {
+            console.log(answer);
+
+            const newInternInfo = new Intern(answer.name, answer.id, answer.email, answer.school);
+            team.push(newInternInfo);
+            addTeamMembers();
+        });
+    for (var i = 0; i < managerQuestions.length; i++) {
+        if (managerQuestions[i].name === "school") {
+            managerQuestions.splice(i, 1);
+            break;
+        };
+    };
+}
