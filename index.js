@@ -3,15 +3,6 @@ const path = require('path');
 const inquirer = require('inquirer');
 const fs = ('fs');
 
-//Creates the HTML file
-const renderHTMLfile = require("../dist/createHTML");
-
-//Calls classes
-const Employee = require("../js/employee");
-const Manager = require("../js/manager");
-const Engineer = require("../js/engineer");
-const Intern = require("../js/intern");
-
 //open array
 const team = [];
 
@@ -20,7 +11,7 @@ const teamManagerInfo = [
     {
         type: "input",
         name: "name",
-        message: "Enter your name name:",
+        message: "Enter your name:",
         default: "Must be a team manager to access this application."
     },
 
@@ -45,7 +36,7 @@ const teamManagerInfo = [
 ]
 
 
-const addTeamMembers = [
+const additions = [
     {
         type: "list",
         name: "employee",
@@ -64,11 +55,11 @@ const addTeamMembers = [
 app();
 function app() {
     inquirer
-        .prompt (managerQuestions)
+        .prompt (teamManagerInfo)
         .then(response => {
 
 const managerAuthentication = new Manager(response.name, response.id, response.email, response.officeNum);
-team.push(teamManagerInfo);
+team.push(managerAuthentication);
 addTeamMembers();
 });
 };
@@ -78,15 +69,12 @@ function addTeamMembers() {
     inquirer
         .prompt (newTeam)
         .then(answer => {
-            switch (answer.addTeamMembers) {
-            case "Engineer": addEngineer(answer.addTeamMembers);
+            switch (answer.additions) {
+            case "Engineer": addEngineer(answer.additions);
                 break;
-            case "Intern": addIntern(answer.addTeamMembers);
+            case "Intern": addIntern(answer.additions);
                 break;
             case "Done":
-                renderHTMLfile(team, (err) => {
-                    if (err) throw err;
-                });
                 break;
         };
     });   
@@ -95,9 +83,9 @@ function addTeamMembers() {
 //engineer choice with github addition
 
 function addEngineer(choice) {
-    for (var i = 0; i < managerQuestions.length; i++) {
-        if (managerQuestions[i].name === "officeNumber") {
-            managerQuestions.splice(i, 1);
+    for (var i = 0; i < teamManagerInfo.length; i++) {
+        if (teamManagerInfo[i].name === "officeNumber") {
+            teamManagerInfo.splice(i, 1);
             break;
          };
     };
@@ -127,25 +115,24 @@ inquirer
 
 //intern choice with school question
 function addIntern(choice) {
-    const InternQuestion = {
+    const internQuestion = {
         type: "input",
-        name: "school"
+        name: "school",
         message: `Enter the school the ${answerChoosed} is associated with: `,
     };
-    managerQuestions.push(internQuestion);
-    managerQuestions[0].message = `Enter the name of the ${answerChoosed}:`;
+    teamManagerInfo.push(internQuestion);
+    teamManagerInfo[0].message = `Enter the name of the ${answerChoosed}:`;
     inquirer
-        .prompt(managerQuestions)
+        .prompt(internQuestion)
         .then(answer => {
-            console.log(answer);
 
             const newInternInfo = new Intern(answer.name, answer.id, answer.email, answer.school);
             team.push(newInternInfo);
             addTeamMembers();
         });
-    for (var i = 0; i < managerQuestions.length; i++) {
-        if (managerQuestions[i].name === "school") {
-            managerQuestions.splice(i, 1);
+    for (var i = 0; i < teamManagerInfo.length; i++) {
+        if (teamManagerInfo[i].name === "school") {
+            teamManagerInfo.splice(i, 1);
             break;
         };
     };
