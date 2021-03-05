@@ -62,32 +62,65 @@ const addTeamMembers = [
 
 //function that starts the application
 app();
-app() => {
+function app() {
     inquirer
         .prompt (managerQuestions)
         .then(response => {
 
 const managerAuthentication = new Manager(response.name, response.id, response.email, response.officeNum);
 team.push(teamManagerInfo);
-addNewMember();
+addTeamMembers();
 });
 };
 
 //function that adds a new team member
-addTeamMember => () {
+function addTeamMembers() {
     inquirer
-        .prompt (newTeamMemberQuestions)
-        .then(response => {
-            switch (response.addTeamMember);
-            case "Engineer"; addEngineer(response.addTeamMember);
+        .prompt (newTeam)
+        .then(answer => {
+            switch (answer.addTeamMembers) {
+            case "Engineer": addEngineer(answer.addTeamMembers);
                 break;
-            case "Intern"; addIntern(response.addTeamMember);
+            case "Intern": addIntern(answer.addTeamMembers);
                 break;
             case "Done":
                 renderHTMLfile(team, (err) => {
                     if (err) throw err;
                 });
                 break;
-        });
-        
+        };
+    });   
 };
+
+//engineer choice with github addition
+
+function addEngineer(choice) {
+    for (var i = 0; i < managerQuestions.length; i++) {
+        if (managerQuestions[i].name === "officeNumber") {
+            managerQuestions.splice(i, 1);
+            break;
+         };
+    };
+
+const engineerQuestion = {
+    type: "input",
+    name: "github",
+    message: `Add the ${choice}'s Github account:`
+};
+
+managerQuestions.push(engineerQuestion);
+managerQuestions[0].message = `Enter the name of the ${choice}:`;
+inquirer
+    .prompt(managerQuestions)
+    .then(answer => {
+        const newEngineerInfo = new Engineer(answer.name, answer.id, answer.email, answer.github);
+        team.push(newEngineerInfo);
+        addTeamMembers();
+    });
+    for (var i = 0; i < managerQuestions.length; i++) {
+        if (managerQuestions[i].name === "gitHubUsername") {
+            managerQuestions.splice(i, 1);
+            break;
+        };
+    };
+}
