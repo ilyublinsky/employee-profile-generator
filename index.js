@@ -1,7 +1,12 @@
-//JSON
-const path = require('path');
 const inquirer = require('inquirer');
 const fs = ('fs');
+const generateHTML = require("./js/renderHTML");
+const generateCSS = require("./js/renderCSS")
+
+// Bringing class modules:
+const Manager = require("./js/manager");
+const Engineer = require("./js/engineer");
+const Intern = require("./js/intern");
 
 //open array
 const team = [];
@@ -58,14 +63,20 @@ function app() {
         .prompt (teamManagerInfo)
         .then(response => {
 
-const managerAuthentication = new Manager(response.name, response.id, response.email, response.officeNum);
-team.push(managerAuthentication);
+const manager = new Manager(response.name, response.id, response.email, response.officeNum);
+team.push(manager);
 addTeamMembers();
 });
 };
 
 //function that adds a new team member
 function addTeamMembers() {
+    for (var i = 0; i < questions.length; i++) {
+        if (questions[i].name === "officeNum") {
+            questions.splice(i, 1);
+            break;
+        };
+    };
     inquirer
         .prompt (newTeam)
         .then(answer => {
@@ -75,20 +86,19 @@ function addTeamMembers() {
             case "Intern": addIntern(answer.additions);
                 break;
             case "Done":
+
+                fs.writeFile("./dist/rendered.html", generateHTML(additions), () => {
+                });
+                fs.writeFile("./dist/style.css", generateCSS(additions), () => {
+                });
                 break;
-        };
-    });   
+            }
+        })   
 };
 
 //engineer choice with github addition
 
 function addEngineer(choice) {
-    for (var i = 0; i < teamManagerInfo.length; i++) {
-        if (teamManagerInfo[i].name === "officeNumber") {
-            teamManagerInfo.splice(i, 1);
-            break;
-         };
-    };
 
 const engineerQuestion = {
     type: "input",
@@ -118,10 +128,10 @@ function addIntern(choice) {
     const internQuestion = {
         type: "input",
         name: "school",
-        message: `Enter the school the ${answerChoosed} is associated with: `,
+        message: `Enter the school the ${answerChoosen} is associated with: `,
     };
     teamManagerInfo.push(internQuestion);
-    teamManagerInfo[0].message = `Enter the name of the ${answerChoosed}:`;
+    teamManagerInfo[0].message = `Enter the name of the ${answerChoosen}:`;
     inquirer
         .prompt(internQuestion)
         .then(answer => {
