@@ -1,5 +1,6 @@
-const inquirer = require('inquirer');
-const fs = ('fs');
+const inquirer = require("inquirer");
+const fs = ("fs");
+const path = require("path");
 const generateHTML = require("./js/renderHTML");
 const generateCSS = require("./js/renderCSS")
 
@@ -37,7 +38,7 @@ const teamManagerInfo = [
         name: "officeNum",
         message: "Enter your office number:"
 
-    },
+    }
 ]
 
 
